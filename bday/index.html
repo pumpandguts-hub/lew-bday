@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFEEF4">
+<title>Happy Birthday Lewis 💗</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush:#FFEEF4;
+    --petal:#FFB6D5;
+    --petal-deep:#E8628F;
+    --lavender:#E4D6F7;
+    --peach:#FFE3C9;
+    --cream:#FFFCFA;
+    --cocoa:#7A4F63;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Quicksand', sans-serif;
+    color:var(--cocoa);
+    background:linear-gradient(120deg, var(--blush), var(--lavender), var(--peach), var(--blush));
+    background-size:300% 300%;
+    animation:bgShift 18s ease infinite;
+    padding:32px 16px;
+  }
+
+  @keyframes bgShift{
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+  }
+
+  .bg-blobs{ position:fixed; inset:0; overflow:hidden; z-index:-1; pointer-events:none; }
+  .blob{ position:absolute; border-radius:50%; filter:blur(55px); opacity:.55; }
+  .b1{ width:240px; height:240px; background:var(--petal); top:-70px; left:-70px; animation:float1 14s ease-in-out infinite; }
+  .b2{ width:220px; height:220px; background:var(--lavender); bottom:-60px; right:-50px; animation:float2 16s ease-in-out infinite; }
+  .b3{ width:170px; height:170px; background:var(--peach); top:45%; right:-70px; animation:float1 12s ease-in-out infinite reverse; }
+
+  @keyframes float1{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(22px,28px); } }
+  @keyframes float2{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-24px,-18px); } }
+
+  .stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    width:100%;
+    max-width:440px;
+    margin:0 auto;
+  }
+
+  .slides{ position:relative; width:100%; display:flex; justify-content:center; }
+
+  .slide{ display:none; width:100%; justify-content:center; }
+  .slide.active{ display:flex; animation:slideIn .55s ease; }
+
+  @keyframes slideIn{
+    from{ opacity:0; transform:translateY(16px) scale(.97); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .card{
+    position:relative;
+    background:var(--cream);
+    border-radius:32px;
+    padding:38px 28px 32px;
+    width:100%;
+    text-align:center;
+    box-shadow:
+      0 24px 60px -18px rgba(232,98,143,.45),
+      0 8px 22px -10px rgba(180,120,200,.3);
+  }
+
+  .corner-heart{ position:absolute; font-size:1.5rem; animation:pulseHeart 1.7s ease-in-out infinite; filter:drop-shadow(0 2px 4px rgba(232,98,143,.3)); }
+  .corner-heart.tl{ top:-14px; left:-8px; }
+  .corner-heart.tr{ top:-14px; right:-8px; animation-delay:.4s; }
+
+  @keyframes pulseHeart{ 0%,100%{ transform:scale(1) rotate(-6deg); } 50%{ transform:scale(1.18) rotate(6deg); } }
+
+  .headline{
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    font-size:clamp(1.7rem, 8vw, 2.4rem);
+    line-height:1.28;
+    margin:0 0 6px;
+    color:var(--cocoa);
+  }
+  .headline.long{ font-size:clamp(1.2rem, 6vw, 1.65rem); line-height:1.35; }
+
+  .word{ display:inline-block; }
+  .letter{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(14px) rotate(-6deg);
+  }
+  .slide.active .letter{
+    animation:letterIn .45s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes letterIn{ to{ opacity:1; transform:translateY(0) rotate(0); } }
+
+  .photo-frame{
+    position:relative;
+    width:100%;
+    max-width:300px;
+    aspect-ratio:4/5;
+    margin:22px auto 8px;
+    border-radius:24px;
+    overflow:hidden;
+    background:linear-gradient(160deg, var(--lavender), var(--peach));
+    border:3px dashed var(--petal-deep);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .photo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    opacity:0;
+    transition:opacity .35s ease;
+  }
+  .photo-frame img.loaded{ opacity:1; }
+  .photo-frame.empty img{ display:none; }
+
+  .placeholder-content{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    padding:18px;
+    color:var(--cocoa);
+  }
+  .photo-frame.empty .placeholder-content{ display:flex; }
+  .placeholder-content p{ margin:0; font-size:.92rem; font-weight:600; }
+  .placeholder-content span{ display:block; font-size:.76rem; opacity:.7; margin-top:3px; font-family:monospace; }
+
+  .next-btn, .restart-btn{
+    margin-top:18px;
+    border:none;
+    cursor:pointer;
+    font-family:'Quicksand', sans-serif;
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
+  }
+
+  .next-btn{
+    padding:14px 38px;
+    border-radius:999px;
+    background:linear-gradient(135deg, var(--petal), var(--petal-deep));
+    color:#fff;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:.02em;
+    box-shadow:0 12px 26px -10px rgba(232,98,143,.65);
+  }
+  .next-btn:hover{ transform:translateY(-3px) scale(1.04); box-shadow:0 16px 32px -10px rgba(232,98,143,.75); }
+  .next-btn:active{ transform:translateY(0) scale(.97); }
+  .next-btn:focus-visible, .restart-btn:focus-visible{ outline:3px solid var(--lavender); outline-offset:3px; }
+
+  .restart-btn{
+    background:none;
+    color:var(--petal-deep);
+    font-weight:600;
+    font-size:.9rem;
+    text-decoration:underline;
+    text-underline-offset:3px;
+    padding:6px 10px;
+  }
+  .restart-btn:hover{ transform:scale(1.03); }
+
+  .dots{ display:flex; gap:8px; }
+  .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:rgba(255,255,255,.7);
+    border:1.5px solid var(--petal-deep);
+    transition:all .3s ease;
+  }
+  .dot.active{ background:var(--petal-deep); width:24px; border-radius:6px; }
+
+  .hearts-layer{ position:fixed; inset:0; pointer-events:none; z-index:40; overflow:hidden; }
+  .heart{
+    position:absolute;
+    bottom:-40px;
+    animation-name:floatUp;
+    animation-timing-function:linear;
+    animation-fill-mode:forwards;
+    will-change:transform, opacity;
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:1; }
+    100%{ transform:translateY(-115vh) translateX(18px) rotate(30deg); opacity:0; }
+  }
+
+  .sound-toggle{
+    position:fixed;
+    top:calc(16px + env(safe-area-inset-top, 0px));
+    right:16px;
+    z-index:50;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:2px solid var(--petal-deep);
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(4px);
+    font-size:1.15rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 18px -8px rgba(232,98,143,.5);
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .sound-toggle:hover{ transform:scale(1.08); }
+  .sound-toggle:active{ transform:scale(.95); }
+  .sound-toggle:focus-visible{ outline:3px solid var(--lavender); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    body{ animation:none; background-position:0% 50%; }
+    .bg-blobs{ display:none; }
+    .letter{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-blobs" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+  <button id="soundToggle" class="sound-toggle" aria-label="Toggle background music">🔊</button>
+
+  <main class="stage">
+    <div class="slides">
+
+      <section class="slide active" data-slide="0">
+        <div class="card">
+          <h1 class="headline long" data-text="Hi Lewis! (my cutie patootie 💗)"></h1>
+          <div class="photo-frame">
+            <img data-base="slide1" alt="A photo for Lewis">
+            <div class="placeholder-content">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E8628F" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8.5" cy="10" r="1.6" fill="#E8628F" stroke="none"/><path d="M21 16l-5.5-5-3.5 4-2-2L3 18"/></svg>
+              <p>Add a photo here</p>
+              <span>save it as slide1.jpg</span>
+            </div>
+          </div>
+          <button class="next-btn" data-next>Next <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="1">
+        <div class="card">
+          <h1 class="headline long" data-text="I know life can be hard sometimes, but you have to be harder!"></h1>
+          <div class="photo-frame">
+            <img data-base="slide2" alt="A photo for Lewis">
+            <div class="placeholder-content">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E8628F" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8.5" cy="10" r="1.6" fill="#E8628F" stroke="none"/><path d="M21 16l-5.5-5-3.5 4-2-2L3 18"/></svg>
+              <p>Add a photo here</p>
+              <span>save it as slide2.jpg</span>
+            </div>
+          </div>
+          <button class="next-btn" data-next>Next <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="2">
+        <div class="card">
+          <h1 class="headline" data-text="That's why I wanna say…"></h1>
+          <div class="photo-frame">
+            <img data-base="slide3" alt="A photo for Lewis">
+            <div class="placeholder-content">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E8628F" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8.5" cy="10" r="1.6" fill="#E8628F" stroke="none"/><path d="M21 16l-5.5-5-3.5 4-2-2L3 18"/></svg>
+              <p>Add a photo here</p>
+              <span>save it as slide3.jpg</span>
+            </div>
+          </div>
+          <button class="next-btn" data-next>Next <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="3">
+        <div class="card">
+          <span class="corner-heart tl" aria-hidden="true">💗</span>
+          <span class="corner-heart tr" aria-hidden="true">💗</span>
+          <h1 class="headline" data-text="Happy birthday sweetheart!! 💗"></h1>
+          <div class="photo-frame">
+            <img data-base="slide4" alt="A photo for Lewis">
+            <div class="placeholder-content">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E8628F" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8.5" cy="10" r="1.6" fill="#E8628F" stroke="none"/><path d="M21 16l-5.5-5-3.5 4-2-2L3 18"/></svg>
+              <p>Add a photo here</p>
+              <span>save it as slide4.jpg</span>
+            </div>
+          </div>
+          <button class="restart-btn" data-restart>Watch it again 💌</button>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="dots" aria-hidden="true">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </main>
+
+  <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
+
+<script>
+  // ---- Split each headline into animated letters, grouped by word ----
+  document.querySelectorAll('.headline').forEach(el => {
+    const text = el.dataset.text || el.textContent;
+    el.textContent = '';
+    const words = text.split(' ');
+    let i = 0;
+    words.forEach((word, wi) => {
+      const wordSpan = document.createElement('span');
+      wordSpan.className = 'word';
+      [...word].forEach(ch => {
+        const letter = document.createElement('span');
+        letter.className = 'letter';
+        letter.textContent = ch;
+        letter.style.animationDelay = (i * 0.03) + 's';
+        i++;
+        wordSpan.appendChild(letter);
+      });
+      el.appendChild(wordSpan);
+      if (wi < words.length - 1) el.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  // ---- Image loading with graceful fallback (tries jpg/jpeg/png/webp) ----
+  const exts = ['jpg', 'jpeg', 'png', 'webp'];
+  document.querySelectorAll('img[data-base]').forEach(img => {
+    let idx = 0;
+    const base = img.dataset.base;
+    function tryNext(){
+      if (idx >= exts.length){
+        img.closest('.photo-frame').classList.add('empty');
+        return;
+      }
+      img.src = base + '.' + exts[idx];
+      idx++;
+    }
+    img.addEventListener('error', tryNext);
+    img.addEventListener('load', () => img.classList.add('loaded'));
+    tryNext();
+  });
+
+  // ---- Background music (subtle, auto-loops, with a mute toggle) ----
+  const audio = document.getElementById('bgMusic');
+  const soundToggle = document.getElementById('soundToggle');
+  audio.volume = 0.22;
+
+  function attemptPlay(){
+    audio.play().catch(() => { /* blocked until the person interacts — that's fine */ });
+  }
+  attemptPlay();
+  ['click', 'touchstart', 'keydown'].forEach(evt => {
+    document.addEventListener(evt, attemptPlay, { once: true });
+  });
+
+  soundToggle.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    soundToggle.textContent = audio.muted ? '🔇' : '🔊';
+  });
+
+  // ---- Slide navigation ----
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = Array.from(document.querySelectorAll('.dot'));
+  let current = 0;
+
+  function showSlide(i){
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    current = i;
+    if (i === slides.length - 1) startHearts(); else stopHearts();
+  }
+
+  document.querySelectorAll('[data-next]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (current < slides.length - 1) showSlide(current + 1);
+    });
+  });
+  document.querySelectorAll('[data-restart]').forEach(btn => {
+    btn.addEventListener('click', () => showSlide(0));
+  });
+  document.addEventListener('keydown', e => {
+    if ((e.key === 'ArrowRight' || e.key === 'Enter') && current < slides.length - 1){
+      showSlide(current + 1);
+    }
+  });
+
+  // ---- Heart finale ----
+  const heartsLayer = document.getElementById('heartsLayer');
+  const heartEmojis = ['💕', '💗', '💖', '💓', '❤️'];
+  let heartsInterval = null;
+
+  function spawnHeart(){
+    const heart = document.createElement('span');
+    heart.className = 'heart';
+    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+    heartsLayer.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }
+
+  function startHearts(){
+    if (heartsInterval) return;
+    spawnHeart();
+    heartsInterval = setInterval(spawnHeart, 220);
+  }
+  function stopHearts(){
+    clearInterval(heartsInterval);
+    heartsInterval = null;
+  }
+</script>
+</body>
+</html>
